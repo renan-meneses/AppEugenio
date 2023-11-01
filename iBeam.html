@@ -501,9 +501,11 @@
             // var g = 15; // g e q sao input's
             var mat = (g + (q*5))*(Mk/(g+q)); // g e q sao input's
             console.log("mat: ", mat); 
-            var mr = (1.5*inercia2*Fctm*100)/h*0.5 ;
+            var mr = (1.5*inercia2*Fctm*100)/(h*0.5) ;
             console.log("mr: ", mr);
-            var ieq = (Ecs/10)*((((mr/mat)*(mr/mat)*(mr/mat))*inercia2)+((1-((mr/mat)*(mr/mat)*(mr/mat)))-inercia2));
+            var ieq = (Ecs/10)*((((mr/mat)*(mr/mat)*(mr/mat))*inercia2)+((1-((mr/mat)*(mr/mat)*(mr/mat)))-inercia));
+            console.log("ieq: ", ieq);
+            console.log("Ecs*ic*100000000: ", Ecs*ic*100000000);
             if (ieq<=Ecs*ic*100000000) {
                 ieq = "mensagem de erro"
             };
