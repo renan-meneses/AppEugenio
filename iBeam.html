@@ -506,7 +506,7 @@
             var ieq = (Ecs/10)*((((mr/mat)*(mr/mat)*(mr/mat))*inercia2)+((1-((mr/mat)*(mr/mat)*(mr/mat)))-inercia));
             console.log("ieq: ", ieq);
             console.log("Ecs*ic*100000000: ", Ecs*ic*100000000);
-            if (ieq<=Ecs*ic*100000000) {
+            if (ieq<=Ecs*inercia*100000000) {
                 ieq = "mensagem de erro"
             };
             console.log("ieq: ", ieq);
