@@ -35,6 +35,11 @@
                     <label for="h">h (m)</label><br>
                     <input type="text" id="h" required placeholder="ex : 17.0800" step="0.0001">
                 </div>
+
+                <div class="input-block">
+                    <label for="L">L (m)</label><br>
+                    <input type="text" id="L" required placeholder="ex : 90" step="0.0001">
+                </div>
  
                 <div class="input-block">
                     <label for="bw">bw (m)</label><br>
@@ -46,6 +51,15 @@
                     <label for="Mk">Mk (KNm)</label><br>
                     <input type="text" id="Mk" required placeholder="ex : 17.0800" step="0.0001">
                 </div>
+                <div class="input-block">
+                    <label for="q">q (KN/m)</label><br>
+                    <input type="text" id="q" required placeholder="ex : 17.0800" step="0.0001">
+                </div>
+                <div class="input-block">
+                    <label for="g">g (KN/m)</label><br>
+                    <input type="text" id="g" required placeholder="ex : 17.0800" step="0.0001">
+                </div>
+
                 <div class="input-block">
                     <label for="Vk">Vk (KN)</label><br>
                     <input type="text" id="Vk" required placeholder="ex : 17.0800" step="0.0001">
@@ -129,6 +143,17 @@
             //recebendo inputs 
             var h = parseFloat(document.getElementById("h").value);
             console.log('h:', h);
+
+            var L = parseFloat(document.getElementById("L").value);
+            console.log('L:', L);
+
+            var q = parseFloat(document.getElementById("q").value);
+            console.log('q:', q);
+
+            var g = parseFloat(document.getElementById("g").value);
+            console.log('g:', g);
+
+
 
 
             var classe = document.getElementById("classe").value;
@@ -314,7 +339,9 @@
             // console.log('ah',ah);
 
             var fit = bitolaEstribo;
+            console.log('fit: ', fit);
             var fi = bitolaUtilizada;
+            console.log('fi: ', fi);
             var n = numeroBarras;
             while (ah < ahMin) {
                 n = n - 1;
@@ -322,10 +349,13 @@
                     // console.log('erro');
                     break;
                 } else {
-                    ah = (bw - (2 * cobrimento + 2 * fit + n * fi)) / (n - 1);
+                    ah = (bw*100 - (2 * cobrimento + 2 * fit + n * fi)) / (n - 1);
+                    console.log("ah: ",ah );
                     ah3 = 1.2 * diametroAgregado;
+                    console.log("ah3: ",ah3 );
                     ahMin = [2, fi, ah3];
                     ahMin = Math.max(...ahMin);
+                    console.log("ahMin: ",ahMin );
                 }
                 };
 
@@ -392,17 +422,25 @@
             console.log("dLinha: ", dLinha); 
             var As2
             var As1
+            var numeroBarraAs1
+            var numeroBarraAs2
             var areaDupla
             if (x > x_045d) {
                 areaDupla = true;
                 As2 = (((Mk*1.4))-MdlimiteX045d)/((d-dLinha)*Fyd_Long) ;
                 As1 = (MdlimiteX045d)/((d-0.4*x_045d)*Fyd_Long) ;
-                As = As1 + As2 ; 
+                As = As1 + As2 ;
+                numeroBarraAs1 = As1/areaAcoBitola;
+                numeroBarraAs2 = As2/areaAcoBitola;
+                console.log("numeroBarraAs1: ",numeroBarraAs1);
+                console.log("numeroBarraAs2: ",numeroBarraAs2); 
             } else {
                 areaDupla = false;
                 As2 = 0;
                 As1 = 0;
                 As = Asef;
+                numeroBarraAs1 = As1/areaAcoBitola;
+                numeroBarraAs2 = As2/areaAcoBitola;
             }
             console.log("As1: ",As1)
             console.log("As2: ", As2);
@@ -424,9 +462,9 @@
 
             var a1 = (bw*100)/2;
             console.log("a1: ",a1);
-            var a2 = ae*As;
+            var a2 = ae*Asef;
             console.log("a2: ",a2);
-            var a3 = (-(d*100*ae*As));
+            var a3 = (-(d*100*ae*Asef));
             console.log("a3: ",a3);
 
             // Fissuração
@@ -438,7 +476,7 @@
             }
             console.log("xii: ",xii ); 
 
-            var inercia
+            var inercia2
             if (areaDupla) {
                 inercia = ((bw * 100 * Math.pow(xii, 3)) / 3) + (ae * As * Math.pow((xii - (d * 100)), 2)) + ((ae - 1) * Math.pow((As2 * (xii - dLinha)), 2)) / Math.pow(10, 8);
             } else {
@@ -446,7 +484,49 @@
             };
             console.log("inercia: ", inercia);
             var tensaoDeTracao = (Md/inercia)*(ae)*((d)-(xii/100))/(1000);
-            console.log("tensao de tracao: ", tensaoDeTracao); 
+            console.log("tensao de tracao: ", tensaoDeTracao);
+
+
+            var acri = 1 ; // receber valor do python
+            console.log("acri: ", acri); 
+            var pri = areaAcoBitola / acri ; 
+            console.log("pri: ", pri);
+            var wk1 = (bitolaUtilizada / (12.5 * 2.25))*(tensaoDeTracao/Esi)*((4/pri)*45) ;
+            console.log("wk1: ", wk1); 
+            var wk2 = (bitolaUtilizada*3*tensaoDeTracao*tensaoDeTracao)/(12.5*2.25*Esi*Fctm);
+            console.log("wk2: ", wk2);
+            var ic = (h*h*h)*bw /12 ;
+            console.log("ic: ", ic);
+            // var q = 10; // g e q sao input's
+            // var g = 15; // g e q sao input's
+            var mat = (g + (q*5))*(Mk/(g+q)); // g e q sao input's
+            console.log("mat: ", mat); 
+            var mr = (1.5*inercia2*Fctm*100)/h*0.5 ;
+            console.log("mr: ", mr);
+            var ieq = (Ecs/10)*((((mr/mat)*(mr/mat)*(mr/mat))*inercia2)+((1-((mr/mat)*(mr/mat)*(mr/mat)))-inercia2));
+            if (ieq<=Ecs*ic*100000000) {
+                ieq = "mensagem de erro"
+            };
+            console.log("ieq: ", ieq);
+            // var L = 300 ; // input 
+            // console.log("L: ", L);
+            var L = L*100; 
+            var ai = ((L*L*L*L)*5*(mat/100))/((ieq/1000000000)*384*Ecs);
+            console.log("ai: ", ai);
+            var amax = L/250 ; 
+            console.log("amax: ", amax);
+            var plinha = As2/(bw*d);
+            console.log("plinha: ", plinha);
+            var x = 0.47;
+            // console.log("tensao de tracao: ", tensaoDeTracao);
+            var e0 = 0.68*(0.996**x)*(x**0.32);
+            console.log("e0: ", e0);
+            var einf = 2 ; 
+            // console.log("tensao de tracao: ", tensaoDeTracao);
+            var af = (einf - e0 )/(1+(50*plinha));
+            console.log("af: ", af);
+            var aflu = ai*(1+af);
+            console.log("aflu: ", aflu);
 
 
 
