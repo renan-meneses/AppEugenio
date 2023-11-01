@@ -478,12 +478,12 @@
 
             var inercia2
             if (areaDupla) {
-                inercia = ((bw * 100 * Math.pow(xii, 3)) / 3) + (ae * As * Math.pow((xii - (d * 100)), 2)) + ((ae - 1) * Math.pow((As2 * (xii - dLinha)), 2)) / Math.pow(10, 8);
+                inercia2 = ((bw * 100 * Math.pow(xii, 3)) / 3) + (ae * As * Math.pow((xii - (d * 100)), 2)) + ((ae - 1) * Math.pow((As2 * (xii - dLinha)), 2)) / Math.pow(10, 8);
             } else {
-                inercia = (((bw * 100 * xii*xii*xii)/3) + (ae * As * Math.pow((xii-d*100),2)))/100000000; 
+                inercia2 = (((bw * 100 * xii*xii*xii)/3) + (ae * As * Math.pow((xii-d*100),2)))/100000000; 
             };
-            console.log("inercia: ", inercia);
-            var tensaoDeTracao = (Md/inercia)*(ae)*((d)-(xii/100))/(1000);
+            console.log("inercia2: ", inercia2);
+            var tensaoDeTracao = (Md/inercia2)*(ae)*((d)-(xii/100))/(1000);
             console.log("tensao de tracao: ", tensaoDeTracao);
 
 
@@ -495,7 +495,7 @@
             console.log("wk1: ", wk1); 
             var wk2 = (bitolaUtilizada*3*tensaoDeTracao*tensaoDeTracao)/(12.5*2.25*Esi*Fctm);
             console.log("wk2: ", wk2);
-            var ic = (h*h*h)*bw /12 ;
+            var inercia = (h*h*h)*bw /12 ;
             console.log("ic: ", ic);
             // var q = 10; // g e q sao input's
             // var g = 15; // g e q sao input's
