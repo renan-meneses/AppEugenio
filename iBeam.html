@@ -602,6 +602,10 @@
           ((acaoQuasePermanente * L) / 100) ** 2 / 8;
         var Mmáx_acao_rara = ((acaoRara * L) / 100) ** 2 / 8;
 
+        var MrMmáx_acao_permanente = mr / Mmax_acao_permanente;
+        var MrMmáx_acao_quase_permanente = mr / Mmax_acao_quase_permanente;
+        var MrMmáx_acao_rara = mr / Mmáx_acao_rara;
+
         var ai = (L * L * L * L * 5 * (mat / 100)) / (ieq * 100000000 * 384);
         console.log('ai: ', ai);
         var amax = L / 250;
@@ -621,7 +625,7 @@
 
         /*
       git add .
-      git commit -m "Definindo Mmáx_acao_permanente, "
+      git commit -m "Definindo Mmáx_acao_permanente, Mmáx_acao_quase_permanente e Mmáx_acao_rara"
       git push origin main
       */
 
