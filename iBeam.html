@@ -602,9 +602,19 @@
           ((acaoQuasePermanente * L) / 100) ** 2 / 8;
         var Mmáx_acao_rara = ((acaoRara * L) / 100) ** 2 / 8;
 
-        var MrMmáx_acao_permanente = mr / Mmax_acao_permanente;
-        var MrMmáx_acao_quase_permanente = mr / Mmax_acao_quase_permanente;
-        var MrMmáx_acao_rara = mr / Mmáx_acao_rara;
+        var MrMmax_acao_permanente = mr / Mmax_acao_permanente;
+        var MrMmax_acao_quase_permanente = mr / Mmax_acao_quase_permanente;
+        var MrMmax_acao_rara = mr / Mmáx_acao_rara;
+
+        var Im_acao_permanente =
+          MrMmax_acao_permanente ** 3 * inercia +
+          (1 - MrMmax_acao_permanente ** 3) * inercia2;
+        var Im_acao_quase_permanente =
+          MrMmax_acao_quase_permanente ** 3 * inercia +
+          (1 - MrMmax_acao_quase_permanente ** 3) * inercia2;
+        var Im_acao_rara =
+          MrMmax_acao_rara ** 3 * inercia +
+          (1 - MrMmax_acao_rara ** 3) * inercia2;
 
         var ai = (L * L * L * L * 5 * (mat / 100)) / (ieq * 100000000 * 384);
         console.log('ai: ', ai);
@@ -622,6 +632,8 @@
         console.log('af: ', af);
         var aflu = ai * (1 + af);
         console.log('aflu: ', aflu);
+
+        iner;
 
         /*
       git add .
