@@ -599,15 +599,22 @@
         var acaoPermanente = g * 0.5;
         var acaoQuasePermanente = (g + 0.3 * q) * 0.5; //=((C134+C135)+0,3*4)*0,5
         var acaoRara = (g + q) * 0.5; // =(C134+C135+4)*0,5
+        console.log(`acaoQuasePermanente: ${acaoQuasePermanente}`);
 
         var Mmax_acao_permanente = (acaoPermanente * (L / 100) ** 2) / 8;
         var Mmax_acao_quase_permanente =
           ((acaoQuasePermanente * L) / 100) ** 2 / 8;
         var Mmáx_acao_rara = ((acaoRara * L) / 100) ** 2 / 8;
+        console.log(
+          `Mmax_acao_quase_permanente: ${Mmax_acao_quase_permanente}`
+        );
 
         var MrMmax_acao_permanente = mr / Mmax_acao_permanente;
         var MrMmax_acao_quase_permanente = mr / Mmax_acao_quase_permanente;
         var MrMmax_acao_rara = mr / Mmáx_acao_rara;
+        console.log(
+          `MrMmax_acao_quase_permanente: ${MrMmax_acao_quase_permanente}`
+        );
 
         var Im_acao_permanente =
           MrMmax_acao_permanente ** 3 * inercia +
@@ -618,28 +625,36 @@
         var Im_acao_rara =
           MrMmax_acao_rara ** 3 * inercia +
           (1 - MrMmax_acao_rara ** 3) * inercia2;
+        console.log(`Im_acao_quase_permanente: ${Im_acao_quase_permanente}`);
 
         var pIM_acao_permanente = acaoPermanente / Im_acao_permanente;
         var pIM_acao_quase_permanente =
           acaoQuasePermanente / Im_acao_quase_permanente;
         var pIM_acao_rara = acaoRara / Im_acao_rara;
+        console.log(`pIM_acao_quase_permanente: ${pIM_acao_quase_permanente}`);
 
-        var ai_acao_permanenteMetros =
+        var a_acao_permanenteMetros =
           (pIM_acao_permanente * (L / 100) ** 4 * 5) / (384 * 2100000);
-        var ai_acao_quase_permanenteMetros =
+        var a_acao_quase_permanenteMetros =
           (pIM_acao_quase_permanente * (L / 100) ** 4 * 5) / (384 * 2100000);
-        var ai_acao_raraMetros =
+        var a_acao_raraMetros =
           (pIM_acao_rara * (L / 100) ** 4 * 5) / (384 * 2100000);
+        console.log(
+          `a_acao_quase_permanenteMetros: ${a_acao_quase_permanenteMetros}`
+        );
 
-        var ai_acao_permanenteCentimetro =
+        var a_acao_permanenteCentimetro =
           (pIM_acao_permanente * L ** 4 * 5) / (384 * 2100000);
-        var ai_acao_quase_permanenteCentimetro =
+        var a_acao_quase_permanenteCentimetro =
           (pIM_acao_quase_permanente * L ** 4 * 5) / (384 * 2100000);
-        var ai_acao_raraCentimetro =
+        var a_acao_raraCentimetro =
           (pIM_acao_rara * L ** 4 * 5) / (384 * 2100000);
+        console.log(
+          `a_acao_permanenteCentimetro: ${a_acao_permanenteCentimetro} ,a_acao_quase_permanenteCentimetro: ${a_acao_quase_permanenteCentimetro} ,a_acao_raraCentimetro: ${a_acao_raraCentimetro}`
+        );
 
-        var ai = (L * L * L * L * 5 * (mat / 100)) / (ieq * 100000000 * 384);
-        console.log('ai: ', ai);
+        // var ai = a_acao_raraCentimetro - a_acao_permanenteCentimetro;
+
         var amax = L / 250;
         console.log('amax: ', amax);
         var plinha = As2 / (bw * d);
@@ -652,7 +667,7 @@
         // console.log("tensao de tracao: ", tensaoDeTracao);
         var af = (einf - e0) / (1 + 50 * plinha);
         console.log('af: ', af);
-        var aflu = ai * (1 + af);
+        var aflu = a_acao_quase_permanenteCentimetro * (1 + af);
         console.log('aflu: ', aflu);
 
         /*
