@@ -631,6 +631,13 @@
         var ai_acao_raraMetros =
           (pIM_acao_rara * (L / 100) ** 4 * 5) / (384 * 2100000);
 
+        var ai_acao_permanenteCentimetro =
+          (pIM_acao_permanente * L ** 4 * 5) / (384 * 2100000);
+        var ai_acao_quase_permanenteCentimetro =
+          (pIM_acao_quase_permanente * L ** 4 * 5) / (384 * 2100000);
+        var ai_acao_raraCentimetro =
+          (pIM_acao_rara * L ** 4 * 5) / (384 * 2100000);
+
         var ai = (L * L * L * L * 5 * (mat / 100)) / (ieq * 100000000 * 384);
         console.log('ai: ', ai);
         var amax = L / 250;
