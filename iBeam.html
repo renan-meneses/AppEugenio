@@ -616,6 +616,11 @@
           MrMmax_acao_rara ** 3 * inercia +
           (1 - MrMmax_acao_rara ** 3) * inercia2;
 
+        var pIM_acao_permanente = acaoPermanente / Im_acao_permanente;
+        var pIM_acao_quase_permanente =
+          acaoQuasePermanente / Im_acao_quase_permanente;
+        var pIM_acao_rara = acaoRara / Im_acao_rara;
+
         var ai = (L * L * L * L * 5 * (mat / 100)) / (ieq * 100000000 * 384);
         console.log('ai: ', ai);
         var amax = L / 250;
@@ -632,8 +637,6 @@
         console.log('af: ', af);
         var aflu = ai * (1 + af);
         console.log('aflu: ', aflu);
-
-        iner;
 
         /*
       git add .
