@@ -597,6 +597,11 @@
         var acaoQuasePermanente = (g + 0.3 * q) * 0.5; //=((C134+C135)+0,3*4)*0,5
         var acaoRara = (g + q) * 0.5; // =(C134+C135+4)*0,5
 
+        var Mmax_acao_permanente = (acaoPermanente * (L / 100) ** 2) / 8;
+        var Mmax_acao_quase_permanente =
+          ((acaoQuasePermanente * L) / 100) ** 2 / 8;
+        var Mmáx_acao_rara = ((acaoRara * L) / 100) ** 2 / 8;
+
         var ai = (L * L * L * L * 5 * (mat / 100)) / (ieq * 100000000 * 384);
         console.log('ai: ', ai);
         var amax = L / 250;
@@ -614,11 +619,11 @@
         var aflu = ai * (1 + af);
         console.log('aflu: ', aflu);
 
-        /*  
-git add .
-git commit -m "Descrição das alterações"
-git push origin main
-*/
+        /*
+      git add .
+      git commit -m "Definindo Mmáx_acao_permanente, "
+      git push origin main
+      */
 
         // diametroAgregado = 1.2*2.5;
         // var ahLista = [0.02 , bitolaUtilizada/10 , diametroAgregado];
