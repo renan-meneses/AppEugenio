@@ -592,6 +592,11 @@
         // var L = 300 ; // input
         // console.log("L: ", L);
         var L = L * 100;
+
+        var acaoPermanente = g * 0.5;
+        var acaoQuasePermanente = (g + 0.3 * q) * 0.5; //=((C134+C135)+0,3*4)*0,5
+        var acaoRara = (g + q) * 0.5; // =(C134+C135+4)*0,5
+
         var ai = (L * L * L * L * 5 * (mat / 100)) / (ieq * 100000000 * 384);
         console.log('ai: ', ai);
         var amax = L / 250;
