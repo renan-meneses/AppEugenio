@@ -602,7 +602,8 @@
         console.log(`acaoQuasePermanente: ${acaoQuasePermanente}`);
 
         var Mmax_acao_permanente = (acaoPermanente * (L / 100) ** 2) / 8;
-        var Mmax_acao_quase_permanente = (acaoQuasePermanente * L ** 2) / 8;
+        var Mmax_acao_quase_permanente =
+          (acaoQuasePermanente * (L / 100) ** 2) / 8;
         var Mmáx_acao_rara = (acaoRara * (L / 100) ** 2) / 8;
         console.log(
           `Mmax_acao_quase_permanente: ${Mmax_acao_quase_permanente}`
