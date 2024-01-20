@@ -592,6 +592,9 @@
         // var L = 300 ; // input
         // console.log("L: ", L);
         var L = L * 100;
+        console.log(
+          `O L que está sendo usado é ${L} centímeros ou ${L} metros`
+        );
 
         var acaoPermanente = g * 0.5;
         var acaoQuasePermanente = (g + 0.3 * q) * 0.5; //=((C134+C135)+0,3*4)*0,5
@@ -620,6 +623,13 @@
         var pIM_acao_quase_permanente =
           acaoQuasePermanente / Im_acao_quase_permanente;
         var pIM_acao_rara = acaoRara / Im_acao_rara;
+
+        var ai_acao_permanenteMetros =
+          (pIM_acao_permanente * (L / 100) ** 4 * 5) / (384 * 2100000);
+        var ai_acao_quase_permanenteMetros =
+          (pIM_acao_quase_permanente * (L / 100) ** 4 * 5) / (384 * 2100000);
+        var ai_acao_raraMetros =
+          (pIM_acao_rara * (L / 100) ** 4 * 5) / (384 * 2100000);
 
         var ai = (L * L * L * L * 5 * (mat / 100)) / (ieq * 100000000 * 384);
         console.log('ai: ', ai);
