@@ -644,12 +644,10 @@
           `a_acao_quase_permanenteMetros: ${a_acao_quase_permanenteMetros}`
         );
 
-        var a_acao_permanenteCentimetro =
-          (pIM_acao_permanente * L ** 4 * 5) / (384 * 2100000);
+        var a_acao_permanenteCentimetro = a_acao_permanenteMetros * 100;
         var a_acao_quase_permanenteCentimetro =
-          (pIM_acao_quase_permanente * L ** 4 * 5) / (384 * 2100000);
-        var a_acao_raraCentimetro =
-          (pIM_acao_rara * L ** 4 * 5) / (384 * 2100000);
+          a_acao_quase_permanenteMetros * 100;
+        var a_acao_raraCentimetro = a_acao_raraMetros * 100;
         console.log(
           `a_acao_permanenteCentimetro: ${a_acao_permanenteCentimetro} ,a_acao_quase_permanenteCentimetro: ${a_acao_quase_permanenteCentimetro} ,a_acao_raraCentimetro: ${a_acao_raraCentimetro}`
         );
