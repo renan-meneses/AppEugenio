@@ -517,7 +517,7 @@
           ai = 1;
         }
         console.log('ai: ', ai);
-        var Ecs = ai * Eci;
+        var Ecs = 0.85 * Eci;
         console.log('Ecs: ', Ecs);
         var Esi = 210000;
         var ae = Esi / Ecs; // depende do tipodeconcretousado
@@ -555,7 +555,7 @@
             100000000;
         }
         console.log('inercia2: ', inercia2);
-        var tensaoDeTracao = ((Md / inercia2) * ae * (d - xii / 100)) / 1000;
+        var tensaoDeTracao = ((mat / inercia2) * ae * (d - xii / 100)) / 1000;
         console.log('tensao de tracao: ', tensaoDeTracao);
 
         var acri = 1; // receber valor do python
@@ -647,7 +647,7 @@
         var a_acao_permanenteCentimetro = a_acao_permanenteMetros * 100;
         var a_acao_quase_permanenteCentimetro =
           a_acao_quase_permanenteMetros * 100;
-        var a_acao_raraCentimetro = a_acao_raraMetros * 100;
+        var a_acao_raraCentimetro = a_acao_ra;
         console.log(
           `a_acao_permanenteCentimetro: ${a_acao_permanenteCentimetro} ,a_acao_quase_permanenteCentimetro: ${a_acao_quase_permanenteCentimetro} ,a_acao_raraCentimetro: ${a_acao_raraCentimetro}`
         );
