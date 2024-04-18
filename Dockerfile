@@ -16,6 +16,5 @@ COPY main.py .
 
 # Define a porta que o contêiner irá expor
 EXPOSE 5000
-
 # Comando para executar o aplicativo quando o contêiner for iniciado
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:main"]

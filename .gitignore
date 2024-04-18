@@ -181,5 +181,3 @@ cython_debug/
 [Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
-
-# End of https://www.toptal.com/developers/gitignore/api/venv,flask,pydev
