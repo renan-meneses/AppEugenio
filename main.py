@@ -9,26 +9,41 @@ app = Flask(__name__)
 def home():
     return render_template('home.html')
 
-@app.route('/iBeam')
+@app.route('/iBeam', methods=['GET', 'POST',])
 def iBeam():
-    return render_template('iBeam.html')
+     if request.method == "POST":
+        data = json.loads(request.data.decode('utf-8'))
+        print( data["h"], data["d"], data["bw"], data["M"])
+        image = VigaDraw(data["h"], data["d"], data["bw"], data["M"])
+        print(image.CalcArmorDistante(2, 2))
+        image.Plot()
+        image.DrawViga(True, True)
 
-@app.route('/tBeam')
+        circles = [((15, 30), .5), ((5, 20), .5), ((25, 40), .5)]
+        image.DrawMultipleArmor(circles)
+        image.CalcArmorDistante(4, 12)
+        graf = image.CalcArmorDistante(2,2)
+        print(graf.show())
+        return render_template('iBeam.html')
+     else:
+        return render_template('iBeam.html')
+
+
+@app.route('/tBeam', methods=['GET', 'POST',])
 def tBeam():
-    return render_template('tBeam.html')
+    if request.method == "POST":
+        data = json.loads(request.data.decode('utf-8'))
+        print( data["h"], data["d"], data["bw"], data["M"])
+        image = VigaDraw(data["h"], data["d"], data["bw"], data["M"])
+        print(image.CalcArmorDistante(2, 2))
+        image.Plot()
+        image.DrawViga(True, True)
 
-@app.route('/draw', methods=['POST',])
-def draw():
-    data = json.loads(request.data.decode('utf-8'))
-    print( data["h"], data["d"], data["bw"], data["M"])
-    image = VigaDraw(data["h"], data["d"], data["bw"], data["M"])
-    print(image.CalcArmorDistante(2, 2))
-    image.Plot()
-    image.DrawViga(True, True)
-
-    circles = [((15, 30), .5), ((5, 20), .5), ((25, 40), .5)]
-    image.DrawMultipleArmor(circles)
-    image.CalcArmorDistante(4, 12)
-    graf = image.CalcArmorDistante(2,2)
-    print(graf.show())
-    return request.data
+        circles = [((15, 30), .5), ((5, 20), .5), ((25, 40), .5)]
+        image.DrawMultipleArmor(circles)
+        image.CalcArmorDistante(4, 12)
+        graf = image.CalcArmorDistante(2,2)
+        print(graf.show())
+        return render_template('tBeam.html')
+    else:
+        return render_template('tBeam.html')
