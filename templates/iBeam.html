@@ -1,0 +1,194 @@
+{% extends "index.html" %}
+{% block content %}
+
+    <section>
+      <img src="{{ url_for('static', filename='images/vigaI.png')}}" alt="botão da viga em I" />
+      <form onsubmit="event.preventDefault(); calcularSoma()">
+        <h2>Especificação da Seção</h2>
+
+        <div class="input-block">
+          <label for="h">h (m)</label><br />
+          <input
+            type="text"
+            id="h"
+            required
+            placeholder="ex : 17.0800"
+            step="0.0001"
+          />
+        </div>
+
+        <div class="input-block">
+          <label for="L">L (m)</label><br />
+          <input
+            type="text"
+            id="L"
+            required
+            placeholder="ex : 90"
+            step="0.0001"
+          />
+        </div>
+
+        <div class="input-block">
+          <label for="bw">bw (m)</label><br />
+          <input
+            type="text"
+            id="bw"
+            required
+            placeholder="ex : 17.0800"
+            step="0.0001"
+          />
+        </div>
+
+        <h2>Solicitação</h2>
+        <div class="input-block">
+          <label for="Mk">Mk (KNm)</label><br />
+          <input
+            type="text"
+            id="Mk"
+            required
+            placeholder="ex : 17.0800"
+            step="0.0001"
+          />
+        </div>
+        <div class="input-block">
+          <label for="q">q (KN/m)</label><br />
+          <input
+            type="text"
+            id="q"
+            required
+            placeholder="ex : 17.0800"
+            step="0.0001"
+          />
+        </div>
+        <div class="input-block">
+          <label for="g">g (KN/m)</label><br />
+          <input
+            type="text"
+            id="g"
+            required
+            placeholder="ex : 17.0800"
+            step="0.0001"
+          />
+        </div>
+
+        <div class="input-block">
+          <label for="Vk">Vk (KN)</label><br />
+          <input
+            type="text"
+            id="Vk"
+            required
+            placeholder="ex : 17.0800"
+            step="0.0001"
+          />
+        </div>
+
+        <h2>Material</h2>
+        <div class="input-block">
+          <label for="Fck">Concreto</label><br />
+          <select id="Fck" name="#" class="input-field-selected">
+            <option value="20MPa">20MPa</option>
+            <option value="25MPa">25MPa</option>
+            <option value="30MPa">30MPa</option>
+            <option value="40MPa">40MPa</option>
+            <option value="50MPa">50MPa</option>
+          </select>
+        </div>
+        <div class="input-block">
+          <label for="steel">Aço da Longitudinal</label><br />
+          <select id="Fyk_Long" name="#" class="input-field-selected">
+            <option value="CA-50">CA-50</option>
+            <option value="CA-60">CA-60</option>
+          </select>
+        </div>
+        <div class="input-block">
+          <label for="steel">Aço da Transversal</label><br />
+          <select id="Fyk_Trans" name="#" class="input-field-selected">
+            <option value="CA-50">CA-50</option>
+            <option value="CA-60">CA-60</option>
+          </select>
+        </div>
+        <h2>Detalhamento</h2>
+        <div class="input-block">
+          <label for="armLong">Armadura Lontidudinal</label><br />
+          <select id="armLong" name="armLong" class="input-field-selected">
+            <option value="5 φ">5 φ</option>
+            <option value="6,3 φ">6,3 φ</option>
+            <option value="8 φ">8 φ</option>
+            <option value="10 φ">10 φ</option>
+            <option value="12,5 φ">12,5 φ</option>
+            <option value="16 φ">16 φ</option>
+            <option value="20 φ">20 φ</option>
+            <option value="22,5 φ">22,5 φ</option>
+            <option value="25 φ">25 φ</option>
+            <option value="35 φ">35 φ</option>
+          </select>
+        </div>
+        <div class="input-block">
+          <label for="armTrans">Armadura Transversal</label><br />
+          <select id="armTrans" name="armTrans" class="input-field-selected">
+            <option value="5 φ">5 φ</option>
+            <option value="6,3 φ">6,3 φ</option>
+          </select>
+        </div>
+
+        <h2>Classe de Agressividade</h2>
+        <div class="input-block">
+          <select id="classe" name="classe" class="input-field-selected">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+        <button type="submit" id="calcula">Calcular</button>
+        <br>
+        <button href="#" id="volta" onclick="history.back()">Voltar</button>
+
+      </form>
+    </section>
+    <script>
+      // Função para enviar os dados do formulário para o servidor
+      function enviarDados() {
+          const d = $('#d').val();
+          const h = $('#h').val();
+          const bw = $('#bw').val();
+          const M = $('#M').val();
+          const concrete = $('#concrete').val();
+          const steel = $('#steel').val();
+          const armaduraLongitudinal = $('#armaduraLongitudinal').val();
+          const armaduraTransversal = $('#armaduraTransversal').val();
+  
+          const dados = {
+              "d": d,
+              "h": h,
+              "bw": bw,
+              "M": M,
+              "concrete": concrete,
+              "steel": steel,
+              "armaduraLongitudinal": armaduraLongitudinal,
+              "armaduraTransversal": armaduraTransversal
+          };
+  
+          // Envia os dados para o servidor usando AJAX
+          $.ajax({
+              type: 'POST',
+              url: '/draw',
+              data: JSON.stringify(dados),
+              processData: false,  // Não processa os dados (já estão no formato correto)
+              contentType: false,  // Não defina automaticamente o cabeçalho Content-Type
+              success: function (response) {
+                  // Se a requisição for bem-sucedida, você pode lidar com a resposta aqui
+                  console.log('Dados enviados com sucesso!');
+              },
+              error: function (xhr, status, error) {
+                  // Se houver algum erro na requisição, você pode lidar com isso aqui
+                  console.error('Erro ao enviar dados:', error);
+              }
+          });
+      }
+  
+      // Adiciona um event listener para o botão de "Calcular"
+      $('#calcula').click(enviarDados);
+  
+  </script>
+{% endblock %}
